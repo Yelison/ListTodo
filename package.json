@@ -4,10 +4,12 @@
   "description": "Practice webpack and react",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development",
+    "webpack-server-dev": "webpack-dev-server",
+    "prod": "webpack --env.mode production",
+    "dev": "npm run webpack-server-dev -- --env.mode development",
     "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server-side-rendering": "node ./dist src/index.html"
   },
   "repository": {
     "type": "git",
@@ -22,19 +24,29 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
+    "@reach/router": "^1.2.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
+    "babel-node": "0.0.1-security",
+    "babel-preset-es2015": "^6.24.1",
     "css-loader": "^3.2.0",
+    "es2015": "0.0.0",
+    "export-files": "^2.1.1",
+    "express": "^4.17.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "js-loader": "^0.1.1",
     "mini-css-extract-plugin": "^0.8.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
   }
 }

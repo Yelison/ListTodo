@@ -1,0 +1,8 @@
+button {
+    color: aqua;
+    background: blue;
+}
+
+button:hover:focus{
+    background: blanchedalmond;
+}
