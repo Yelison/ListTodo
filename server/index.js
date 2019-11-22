@@ -4,18 +4,16 @@ import React from 'react';
 import App from '../src/App';
 import { renderToString} from 'react-dom/server';
 import { ServerLocation } from '@reach/router';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackConfig from '../webpack.config';
 
 const PORT = process.env.PORT || 3000;
 
-const html = fs.read('dist/index.html').toString();
+const html = fs.readFileSync('dist/index.html').toString();
 
 const parts = html.split('Not rendered');
 
 const app = express();
 
-app.use(webpackDevMiddleware(webpackConfig));
+app.use('dist', express.static('dist'));
 
 app.use((req, res) => {
     const reactMarkup = (
@@ -26,7 +24,6 @@ app.use((req, res) => {
 
     res.send(parts[0] + renderToString(reactMarkup) + parts[0]);
     res.end()
-
 });
 
 console.log('Listing in port ' + PORT);

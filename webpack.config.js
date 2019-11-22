@@ -8,7 +8,7 @@ const modeConfig = env => require(`./build-utils/webpack.${env}.js`)(env)
 
 module.exports = ({ mode, presents } = { mode: "production", presents: [] }) => webpackMerge({
     mode,
-    entry: path.join(__dirname, './src/index.js'),
+    entry: [path.join(__dirname, './src/index.js'), path.join(__dirname, './server/index.js')],
     output: {
         filename: "bundle.js",
         path: path.join(__dirname, 'dist')
