@@ -3,12 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPluging = require('mini-css-extract-plugin')
 const webpackMerge = require('webpack-merge');
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 const modeConfig = env => require(`./build-utils/webpack.${env}.js`)(env)
 
 module.exports = ({ mode, presents } = { mode: "production", presents: [] }) => webpackMerge({
     mode,
-    entry: [path.join(__dirname, './src/index.js'), path.join(__dirname, './server/index.js')],
+    entry:  path.join(__dirname, './src/index.js'),
+    // externals: [nodeExternals()],
     output: {
         filename: "bundle.js",
         path: path.join(__dirname, 'dist')
@@ -43,5 +45,5 @@ module.exports = ({ mode, presents } = { mode: "production", presents: [] }) => 
         new Webpack.ProgressPlugin()
     ]
 },
-    modeConfig(mode)
+modeConfig(mode)
 );
