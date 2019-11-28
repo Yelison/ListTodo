@@ -1,8 +1,8 @@
 import express from 'express';
 import fs from 'fs';
 import React from 'react';
-import App from '../src/App';
-import { renderToString} from 'react-dom/server';
+import App from '../App';
+import { renderToString } from 'react-dom/server';
 import { ServerLocation } from '@reach/router';
 
 const PORT = process.env.PORT || 3000;
@@ -23,11 +23,8 @@ app.use((req, res) => {
     );
 
     res.send(parts[0] + renderToString(reactMarkup) + parts[0]);
-    res.end()
+    res.end();
 });
 
 console.log('Listing in port ' + PORT);
 app.listen(PORT);
-
-
-

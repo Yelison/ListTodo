@@ -1,49 +1,62 @@
 const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPluging = require('mini-css-extract-plugin')
+const MiniCssExtractPluging = require('mini-css-extract-plugin');
 const webpackMerge = require('webpack-merge');
 const path = require('path');
+const ExtractCSSChunksPlugin = require('extract-css-chunks-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const combineoaders = require('webpack-combine-loaders');
 
-const modeConfig = env => require(`./build-utils/webpack.${env}.js`)(env)
+const modeConfig = env => require(`./build-utils/webpack.${env}.js`)(env);
 
-module.exports = ({ mode, presents } = { mode: "production", presents: [] }) => webpackMerge({
-    mode,
-    entry:  path.join(__dirname, './src/index.js'),
-    // externals: [nodeExternals()],
-    output: {
-        filename: "bundle.js",
-        path: path.join(__dirname, 'dist')
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
+module.exports = ({ mode, presents } = { mode: 'production', presents: [] }) =>
+    webpackMerge(
+        {
+            mode,
+            entry: path.join(__dirname, './src/App/clientApp/index.js'),
+            output: {
+                filename: '[chunk].bundle.js',
+                path: path.join(__dirname, 'dist'),
             },
-            {
-                test: /\.html$/,
-                exclude: /node_modules/,
-                loader: ['babel-loader', 'html-loader']
-            },
-            {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                loader: ['style-loader', 'css-loader']
-            }
+            plugins: [
+                new HtmlWebpackPlugin({
+                    hash: true,
+                    template: path.join(__dirname, './src/App/clientApp/index.html'),
+                    filename: 'index.html',
+                }),
+                new Webpack.ProgressPlugin(),
+                new MiniCssExtractPluging({
+                    filename: '[name].css'
+                })
+            ],
+            module: {
+                rules: [
+                    {
+                        test: /\.js$/,
+                        exclude: /node_modules/,
+                        loader: 'babel-loader',
+                    },
+                    {
+                        test: /\.html$/,
+                        exclude: /node_modules/,
+                        loader: ['babel-loader', 'html-loader'],
+                    },
+                    {
+                        test: /\.css$/i,
+                        use: [MiniCssExtractPluging.loader,'css-loader']
+                    },
+                    {
+                        test: /\.(jpe?g|png|gif|svg)$/i,
+                        use: [
+                          'url-loader?limit=10000',
+                          'img-loader'
+                        ]
+                      }
+                ],
 
-        ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            hash: true,
-            template: path.join(__dirname, './src/index.html'),
-            filename: 'index.html'
-        }),
-        new MiniCssExtractPluging(),
-        new Webpack.ProgressPlugin()
-    ]
-},
-modeConfig(mode)
-);
+            },
+
+        },
+        modeConfig(mode)
+    );
