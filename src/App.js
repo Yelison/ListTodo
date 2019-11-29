@@ -1,11 +1,7 @@
-const React = require('react');
-const Button = require('./button');
+import React, { lazy, Suspense } from 'react';
+import SwitchRoute from './App/components/SwitchRoute';
 
 const App = () => (
-    <div>
-        <h1>Hola mundo</h1>
-        <Button />
-    </div>
+    <SwitchRoute />
 );
-
 export default App;
