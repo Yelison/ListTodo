@@ -15,6 +15,7 @@ module.exports = ({ mode, presents } = { mode: 'production', presents: [] }) =>
         {
             mode,
             entry: path.join(__dirname, './src/App/clientApp/index.js'),
+
             output: {
                 filename: '[chunk].bundle.js',
                 path: path.join(__dirname, 'dist'),
@@ -43,16 +44,30 @@ module.exports = ({ mode, presents } = { mode: 'production', presents: [] }) =>
                         loader: ['babel-loader', 'html-loader'],
                     },
                     {
-                        test: /\.css$/i,
-                        use: [MiniCssExtractPluging.loader,'css-loader']
+                        test: /\.(sa|c)ss$/i,
+                        use: ['style-loader', MiniCssExtractPluging.loader,
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    sourceMap: true
+                                }
+                            },
+                            {
+                                loader: 'sass-loader',
+                                options: {
+                                    sourceMap: true
+                                }
+                            },
+                        
+                        ]
                     },
                     {
                         test: /\.(jpe?g|png|gif|svg)$/i,
                         use: [
-                          'url-loader?limit=10000',
-                          'img-loader'
+                            'url-loader?limit=10000',
+                            'img-loader'
                         ]
-                      }
+                    }
                 ],
 
             },

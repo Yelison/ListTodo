@@ -1,32 +1,21 @@
 import React from 'react';
+import '../css/form.css'
 
 const Form = () => (
 
-    <form >
-        <h1>Add person</h1>
-        <div >
-            <div>
-                <div >
-                    <label>Image url</label>
-                    <input/>
-                </div>
-                <div >
-                    <label>Name</label>
-                    <input/>
-                </div>
-            </div>
-            <div>
-                <div >
-                    <label>Apellido</label>
-                    <input/>
-                </div>
-                <div >
-                    <label>Tags</label>
-                    <input/>
-                </div>
-            </div>
-        </div>
-    </form>
+    <div className="contentForm">
+        <form>
+            <input type="text" id="fname" name="firstname" placeholder="Your name.." />
+
+            <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
+
+            <input type="text" id="lname" name="lastname" placeholder="A imagen.." />
+
+            <input type="text" id="lname" name="lastname" placeholder="Your tags.." />
+
+            <input type="submit" value="Add person" />
+        </form>
+    </div>
 
 );
 

@@ -1,11 +1,10 @@
 import React from 'react';
+import Form from './Form';
 
-import('../style/form.css');
+import('../css/form.css');
 const Home = () => {
-
     return (
-
-    <div className="test">Home</div>
+        <Form />
 )};
 
 export default Home;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../style/nav.css';
+import '../css/nav.css';
 
 const Nav = () => (
 
-    <nav>
+    <nav className="navStyle">
         <ul>
             <li>
                 <Link to="/">Home</Link>
@@ -13,7 +13,7 @@ const Nav = () => (
                 <Link to="/about">About</Link>
             </li>
             <li>
-                <Link to="/contact">Users</Link>
+                <Link to="/contact">Contact</Link>
             </li>
         </ul>
     </nav>
