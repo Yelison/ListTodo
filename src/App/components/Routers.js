@@ -3,7 +3,6 @@ const Home = lazy(() => import('./Home'));
 const About = lazy(() => import('./About'));
 const Contact = lazy(() => import('./Contact'));
 
-
 const routers = [
     {
         path: "/",
