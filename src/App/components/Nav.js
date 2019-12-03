@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import '../css/nav.css';
 
 const Nav = () => (
-
     <nav className="navStyle">
         <ul>
             <li>
@@ -18,6 +17,5 @@ const Nav = () => (
         </ul>
     </nav>
 )
-
 
 export default Nav;

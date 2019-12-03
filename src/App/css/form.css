@@ -1,4 +1,10 @@
 .contentForm {
+
+    input[name=description], select {
+        width: 97.8% !important;
+        text-align: center;
+    }  
+
     input[type=text], select {
         width: 48%;
         padding: 12px 20px;
@@ -8,7 +14,7 @@
         border-radius: 4px;
         box-sizing: border-box;
     }
-      
+ 
     input[type=submit] {
         width: 100%;
         background-color: #4B5E64;
@@ -25,7 +31,7 @@
         background-color: #363B4B;
     }
       
-    form {
+    div {
         width: 100%;
     }   
       display: flex;
@@ -36,7 +42,3 @@
       margin: auto;
       margin-top: 15px
 }
-
-
-
-

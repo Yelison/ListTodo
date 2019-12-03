@@ -7,4 +7,4 @@ const About = () => {
     <div className="about">This is only for practice...</div>
 )};
 
-export default About; 
+export default About;
