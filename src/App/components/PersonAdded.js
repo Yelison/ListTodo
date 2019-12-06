@@ -17,7 +17,7 @@ const PersonAdded = (props) => {
 						<p>{props.description}</p>
 					</div>
 					<div className="tags">
-						<p>{props.tags}</p>
+						<p>{props.tags.join(',')}</p>
 					</div>
 				</div>
 			</div>

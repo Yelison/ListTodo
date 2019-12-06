@@ -7,7 +7,6 @@ import '../css/personAdded.css';
 
 const Home = () => {
     const [ peopleList, setPeopleList ] = useState([]);
-    console.log(peopleList);
 	return (
 		<div>
 			<Form setPeopleList={setPeopleList} peopleList={peopleList} />
@@ -15,7 +14,7 @@ const Home = () => {
 				{peopleList.map(people => {
 					return (
 						<PersonAdded
-							key={people.name + Math.floor((Math.random() * 1000) + 0.5)}
+							key={people.name + Math.floor((Math.random() * 1000) + 1)}
 							{...people}
 						/>
 					);

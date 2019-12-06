@@ -1,0 +1,31 @@
+.each-tag {
+    display: flex;
+    align-items: center;
+    text-overflow: ellipsis;  
+    max-width: 70px;
+    height: 35px;
+    background: #A1D3FF;
+    color: #3E74DB;
+    margin: 5px 3px;
+
+    p {
+        text-overflow: ellipsis;  
+        white-space: nowrap;
+        overflow: hidden;
+        height: 15px;
+    }
+}
+
+#tags:focus {
+    outline: none;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+
+button:hover {
+    cursor: pointer;
+}

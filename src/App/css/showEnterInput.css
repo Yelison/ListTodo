@@ -1,0 +1,23 @@
+#show-enter-input-content {
+    width: 58.7%;
+    position: absolute;
+    max-height: 285px;
+    overflow-y: auto;
+    margin-top: 43px;
+    background: white;
+
+    #show-enter-input {
+
+        button {
+            margin: 10px 0px;
+
+            &:hover {
+                background: #cccccc;
+            }
+
+            &:focus {
+                outline: royalblue;
+            }
+        }
+    }
+}
