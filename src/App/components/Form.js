@@ -2,108 +2,148 @@ import React, { useState } from 'react';
 import TagsComponent from './TagsComponent';
 import dataLf from '../data/languajeAndFrameworks';
 import ShowEnterInput from './ShowEnterInput';
-import '../css/showEnterInput.css'
 import '../css/form.css';
 
-const Form = (props) => {
-    const [name, setName ] = useState('(Name)');
-    const [lastName, setLastName] = useState('(LastName)');
-    const [img, setImg] = useState('http://placehold.it/150x150');
-    const [tags, setTags] = useState([]);
-    const [description, setDescription] = useState('A little description here!!!!');
-    const [data, setData] = useState([]);
-    const sets = [
-        {
-            type: "text",
-            placeholder: "First name",
-            id: "fname",
-            name: "firstname",
-            set: setName,
-        },
-        {
-            type: "text",
-            placeholder: "Last name",
-            id: "lname",
-            name: "lasttname",
-            set: setLastName,
-        },
-        {
-            type: "text",
-            placeholder: "Imagen (150 x 150)",
-            id: "img",
-            name: "firstname",
-            set: setImg,
-        },
-        {
-            type: "text",
-            placeholder: "Description",
-            id: "description",
-            name: "description",
-            set: setDescription,
+const Form = props => {
+  const [name, setName] = useState('(Name)');
+  const [lastName, setLastName] = useState('(LastName)');
+  const [img, setImg] = useState('http://placehold.it/150x150');
+  const [tags, setTags] = useState([]);
+  const [description, setDescription] = useState('A little description here!!!!');
+  const [inputText, setInputText] = useState('');
+  const sets = [
+    {
+      type: 'text',
+      placeholder: 'First name',
+      id: 'fname',
+      name: 'firstname',
+      set: setName,
+    },
+    {
+      type: 'text',
+      placeholder: 'Last name',
+      id: 'lname',
+      name: 'lasttname',
+      set: setLastName,
+    },
+    {
+      type: 'text',
+      placeholder: 'Imagen (150 x 150)',
+      id: 'img',
+      name: 'firstname',
+      set: setImg,
+    },
+    {
+      type: 'text',
+      placeholder: 'Description',
+      id: 'description',
+      name: 'description',
+      set: setDescription,
+    },
+  ];
+
+  let suggestions = dataLf.filter(({ name }) =>
+    inputText ? name.includes(inputText) : ''
+  );
+
+  const t = suggestions.map(({ name, pageWeb, type }) =>
+    tags.map(tag => {
+      if (name === tag) {
+        delete suggestions[suggestions.indexOf(name)];
+      }
+    })
+  );
+
+  console.log(t);
+  const focusOpcions = (e, index = 0) => {
+    const elBottons = i =>
+      document.querySelectorAll('.show-enter-input button')[`${i}`].focus();
+    const lenOfEle = document.querySelectorAll('.show-enter-input button').length;
+    switch (e.keyCode) {
+      case 40:
+        if (index === 0) {
+          index = lenOfEle - 1;
+        } else {
+          index--;
         }
-    ];
-
-    const focusOpcions = (e, index = 0) => {
-        if(e.keyCode === 40) {
-            document.querySelectorAll(".show-enter-input button")[index].focus();
-        };
+        elBottons(index);
+        break;
+      case 38:
+        if (index === lenOfEle - 1) {
+          index = 0;
+        } else {
+          index++;
+        }
+        elBottons(index);
+        break;
     }
-    return (
+  };
 
-        <form className="contentForm" autoComplete="off">
-            <div className="contentInput">
-            {sets.map(({placeholder, id, name, set, type}) => (
-                <input
-                    key={name + id}
-                    type={type}
-                    id={id}
-                    name={name}
-                    placeholder={placeholder}
-                    onChange={e => set(e.target.value)}
-                />
-            ))}
+  return (
+    <form className='contentForm' autoComplete='off'>
+      <div className='contentInput'>
+        {sets.map(({ placeholder, id, name, set, type }) => (
+          <input
+            key={id}
+            type={type}
+            id={id}
+            name={name}
+            placeholder={placeholder}
+            onChange={e => set(e.target.value)}
+          />
+        ))}
+        <div id='tags-list'>
+          <div id='tag-content'>
+            <TagsComponent>{{ tags, setTags }}</TagsComponent>
+          </div>
+          <input
+            id='tags'
+            type='search'
+            name='tags'
+            onKeyUp={e => {
+              switch (e.keyCode) {
+                case 13:
+                  console.log(tags);
+                  tags.includes(inputText) ? setTags([{ ...tags, inputText }]) : '';
+                  inputText = '';
+                case 8:
+                  if (!inputText) {
+                    setTags(tags.slice(0, tags.length - 1));
+                  }
+                case 40:
+                case 38:
+                  if (suggestions.length) {
+                    focusOpcions(e);
+                  }
+                default:
+                  setInputText(e.target.value);
+              }
+            }}
+          />
 
-            <div id="tags-list">
-                <div id="tag-content">
-                    <TagsComponent>
-                        {tags}
-                    </TagsComponent>
-                </div>
-                    <input 
-                            id="tags" 
-                            type="search" 
-                            name="tags" 
-                            onChange={e => {
-                                e.target.value ? 
-                                setData([dataLf.map(({name}) => name).filter(eachName => eachName.includes(e.target.value))]): 
-                                setData([])
-                            }}
-                            onKeyUp={e => {
-                                if (e.keyCode === 13){
-                                    setTags([...tags, e.target.value])
-                                    e.target.value = "";
-                                }
-                                focusOpcions(e);
-                            }}/>
-
-            <div id="show-enter-input-content">
-                <ShowEnterInput 
-                    data={data}
-                    dataLf={dataLf}
-                    setTags={setTags}
-                    tags={tags}
-                    focusOpcions={focusOpcions}
-                    />
-            </div>
-            </div>
-                <input 
-                    type="button"  
-                    value="Add person" 
-                    onClick={() => {
-                        props.setPeopleList([...props.peopleList, {name, lastName, img, tags, description}]);
-                        }}/>
-            </div>
-        </form>
-)};
+          <div id='show-enter-input-content'>
+            <ShowEnterInput
+              dataLf={suggestions}
+              setTags={setTags}
+              tags={tags}
+              focusOpcions={focusOpcions}
+            />
+          </div>
+        </div>
+        <input
+          type='button'
+          name='addPerson'
+          value='Add person'
+          onClick={() => {
+            props.setPeopleList([
+              ...props.peopleList,
+              { name, lastName, img, tags, description, inputText, dataLf },
+            ]);
+          }}
+        />
+      </div>
+    </form>
+  );
+};
 
 export default Form;

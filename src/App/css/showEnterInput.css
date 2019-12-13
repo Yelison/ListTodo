@@ -1,23 +1,22 @@
 #show-enter-input-content {
-    width: 58.7%;
-    position: absolute;
-    max-height: 285px;
-    overflow-y: auto;
-    margin-top: 43px;
-    background: white;
+	width: 58.7%;
+	position: absolute;
+	max-height: 285px;
+	overflow-y: auto;
+	margin-top: 43px;
+	background: white;
 
-    #show-enter-input {
+	.show-enter-input {
+		.result-search {
+			margin: 10px 0px;
+			width: max-content;
+			padding-right: 100%;
 
-        button {
-            margin: 10px 0px;
+			&:hover {
+				background: #cccccc;
+			}
 
-            &:hover {
-                background: #cccccc;
-            }
-
-            &:focus {
-                outline: royalblue;
-            }
-        }
-    }
+		}
+		overflow: hidden;
+	}
 }

@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import '../css/tags.css'
+import uuid from 'uuid';
+import '../css/tags.css';
 
 class TagsComponent extends Component {
-
-    render() {
-        return (
-            this.props.children.map(tag =>
-                <div className="each-tag" key={Math.floor((Math.random() * 1000) + 1)}>
-                    <p>{tag}</p>
-                    <button>x</button>
-                </div>
-            )
-        );
-    }
+	render() {
+		return this.props.children.tags.map((tag) => (
+			<div className="each-tag" key={uuid.v4()}>
+				<p>{tag}</p>
+				<input
+					type="button"
+					value="x"
+					onClick={() => {
+						let index = this.props.children.tags.filter((i) => i !== tag);
+						this.props.children.setTags(index);
+					}}
+				/>
+			</div>
+		));
+	}
 }
 
 export default TagsComponent;

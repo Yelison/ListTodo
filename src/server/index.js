@@ -16,14 +16,14 @@ const app = express();
 app.use('dist', express.static('dist'));
 
 app.use((req, res) => {
-    const reactMarkup = (
-        <ServerLocation url={req.url}>
-            <App />
-        </ServerLocation>
-    );
+	const reactMarkup = (
+		<ServerLocation url={req.url}>
+			<App />
+		</ServerLocation>
+	);
 
-    res.send(parts[0] + renderToString(reactMarkup) + parts[0]);
-    res.end();
+	res.send(parts[0] + renderToString(reactMarkup) + parts[0]);
+	res.end();
 });
 
 console.log('Listing in port ' + PORT);

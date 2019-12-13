@@ -1,31 +1,38 @@
 .each-tag {
-    display: flex;
-    align-items: center;
-    text-overflow: ellipsis;  
-    max-width: 70px;
-    height: 35px;
-    background: #A1D3FF;
-    color: #3E74DB;
-    margin: 5px 3px;
+	display: flex;
+	align-items: center;
+	text-overflow: ellipsis;
+	max-width: 70px;
+	height: 35px;
+	background: #a1d3ff;
+	color: #3e74db;
+	margin: 5px 3px;
 
-    p {
-        text-overflow: ellipsis;  
-        white-space: nowrap;
-        overflow: hidden;
-        height: 15px;
-    }
+	p {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		height: 15px;
+	}
+
+	input[type=button] {
+		color: #3e74db;
+		background: none;
+		border: none;
+		padding: 0;
+		margin: 0;
+	}
 }
 
 #tags:focus {
-    outline: none;
+	outline: none;
 }
 
 button {
-    background: none;
-    border: none;
+	background: none;
+	border: none;
 }
 
-
 button:hover {
-    cursor: pointer;
+	cursor: pointer;
 }

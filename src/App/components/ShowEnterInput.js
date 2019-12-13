@@ -1,35 +1,35 @@
-import React from 'react';
-
+import React, { Fragment } from 'react';
+import uuid from 'uuid';
+import '../css/showEnterInput.css';
 
 class ShowEnterInput extends React.Component {
-
-    
-    render() {
-
-        return (
-            this.props.data.map((name, index) => {
-                return (
-                    name.map(val => (
-                        <div className="show-enter-input" 
-                            
-                            key={Math.floor((Math.random() * 1000) + 1)}
-                        >
-                        <button 
-                            onClick={() => {this.props.setTags([...this.props.tags, val])}}
-                            onKeyUp={e => {
-                                if(e.keyCode === 40){
-                                    this.props.focusOpcions(e, index)
-                                }
-                                console.log(document.querySelectorAll("#show-enter-input"))
-                            }}
-                        >{val}
-                        </button>
-                    </div>
-                    ))
-                )
-            })
-        )
-    }
+	render() {
+		return (
+			<div className="show-enter-input" >
+				{this.props.dataLf.map((val, index = 0) => (
+					<Fragment key={uuid.v4()}>
+						<button
+							className="result-search"
+							onKeyUp={(e) => {
+								this.props.focusOpcions(e, index);
+								if (e.keyCode === 8) {
+									setTimeout(() => {
+										document.getElementById('tags').focus();
+										document.activeElement();
+									}, 1);
+								}
+							}}
+							onClick={() => {
+								this.props.setTags([ ...this.props.tags, val.name ]);
+							}}
+						>
+							{val.name}
+						</button>
+					</Fragment>
+				))}
+			</div>
+		);
+	}
 }
 
 export default ShowEnterInput;
