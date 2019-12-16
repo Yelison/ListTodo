@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TagsComponent from './TagsComponent';
 import dataLf from '../data/languajeAndFrameworks';
 import ShowEnterInput from './ShowEnterInput';
+// import clearAndMakeFocus from '../utils/clearAndMakeFocus';
 import '../css/form.css';
 
 const Form = props => {
@@ -10,6 +11,7 @@ const Form = props => {
   const [img, setImg] = useState('http://placehold.it/150x150');
   const [tags, setTags] = useState([]);
   const [description, setDescription] = useState('A little description here!!!!');
+  const [placeHolderInput, setPlaceHolderInput] = useState('');
   const [inputText, setInputText] = useState('');
   const sets = [
     {
@@ -46,15 +48,18 @@ const Form = props => {
     inputText ? name.includes(inputText) : ''
   );
 
-  const t = suggestions.map(({ name, pageWeb, type }) =>
-    tags.map(tag => {
-      if (name === tag) {
-        delete suggestions[suggestions.indexOf(name)];
-      }
-    })
-  );
+  // const t = suggestions.map(({ name, pageWeb, type }) =>
+  //   tags.map(tag => {
+  //     if (name === tag) {
+  //       delete suggestions[suggestions.indexOf(name)];
+  //     }
+  //   })
+  // );
 
-  console.log(t);
+  // console.log(t);
+
+  const nameLanguajes = dataLf.map(({ name }) => name);
+  console.log(nameLanguajes);
   const focusOpcions = (e, index = 0) => {
     const elBottons = i =>
       document.querySelectorAll('.show-enter-input button')[`${i}`].focus();
@@ -67,6 +72,7 @@ const Form = props => {
           index--;
         }
         elBottons(index);
+        // setPlaceHolderInput(e.currentTarget.innerText);
         break;
       case 38:
         if (index === lenOfEle - 1) {
@@ -75,6 +81,7 @@ const Form = props => {
           index++;
         }
         elBottons(index);
+        // setPlaceHolderInput(e.currentTarget.innerText);
         break;
     }
   };
@@ -100,12 +107,12 @@ const Form = props => {
             id='tags'
             type='search'
             name='tags'
+            placeholder={placeHolderInput}
             onKeyUp={e => {
+              console.log(inputText);
               switch (e.keyCode) {
-                case 13:
-                  console.log(tags);
-                  tags.includes(inputText) ? setTags([{ ...tags, inputText }]) : '';
-                  inputText = '';
+                case 13 && nameLanguajes.includes(inputText):
+                  setTags([...tags, inputText]);
                 case 8:
                   if (!inputText) {
                     setTags(tags.slice(0, tags.length - 1));
@@ -120,13 +127,13 @@ const Form = props => {
               }
             }}
           />
-
           <div id='show-enter-input-content'>
             <ShowEnterInput
               dataLf={suggestions}
               setTags={setTags}
               tags={tags}
               focusOpcions={focusOpcions}
+              setPlaceHolderInput={setPlaceHolderInput}
             />
           </div>
         </div>

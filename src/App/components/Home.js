@@ -12,7 +12,6 @@ const Home = () => {
 			<Form setPeopleList={setPeopleList} peopleList={peopleList} />
 			<div className="person-added">
 				{peopleList.map((people) => {
-					console.log(people)
 					return <PersonAdded key={uuid.v4()} {...people} />;
 				})}
 			</div>
