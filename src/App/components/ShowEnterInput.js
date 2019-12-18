@@ -11,15 +11,12 @@ class ShowEnterInput extends React.Component {
             <button
               className='result-search'
               onKeyUp={e => {
-								// if(e.keyCode === 40){
-								// 	this.props.setPlaceHolderInput(val.name);
-								// }
-								
                 this.props.focusOpcions(e, index);
               }}
               onClick={() => {
 								this.props.setTags([...this.props.tags, val.name])
-								document.getElementById('tags').value = '';
+								this.props.setInputText('');
+                document.getElementById('tags').value = '';
                 document.getElementById('tags').focus();
               }}
             >

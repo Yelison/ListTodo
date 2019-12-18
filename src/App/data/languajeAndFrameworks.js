@@ -57,7 +57,7 @@ module.exports = [
 	{
 		type: 'Languaje',
 		name: 'JavaScript',
-		pageWeb: 'JavaScript'
+		pageWeb: 'https://www.javascript.com/'
 	},
 	{
 		type: 'Languaje',

@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import TagsComponent from './TagsComponent';
 import dataLf from '../data/languajeAndFrameworks';
 import ShowEnterInput from './ShowEnterInput';
-// import clearAndMakeFocus from '../utils/clearAndMakeFocus';
 import '../css/form.css';
 
 const Form = props => {
-  const [name, setName] = useState('(Name)');
-  const [lastName, setLastName] = useState('(LastName)');
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [img, setImg] = useState('http://placehold.it/150x150');
   const [tags, setTags] = useState([]);
-  const [description, setDescription] = useState('A little description here!!!!');
+  const [email, setEmail] = useState('');
   const [placeHolderInput, setPlaceHolderInput] = useState('');
+  const [startValidate, setStartValidate] = useState(false);
   const [inputText, setInputText] = useState('');
   const sets = [
     {
@@ -20,6 +20,7 @@ const Form = props => {
       id: 'fname',
       name: 'firstname',
       set: setName,
+      value: name.length > 3,
     },
     {
       type: 'text',
@@ -27,6 +28,7 @@ const Form = props => {
       id: 'lname',
       name: 'lasttname',
       set: setLastName,
+      value: lastName.length > 3,
     },
     {
       type: 'text',
@@ -34,32 +36,31 @@ const Form = props => {
       id: 'img',
       name: 'firstname',
       set: setImg,
+      value: true,
     },
     {
       type: 'text',
-      placeholder: 'Description',
-      id: 'description',
-      name: 'description',
-      set: setDescription,
+      placeholder: 'email',
+      id: 'email',
+      name: 'email',
+      set: setEmail,
+      value: email.includes('@'),
     },
   ];
 
-  let suggestions = dataLf.filter(({ name }) =>
-    inputText ? name.includes(inputText) : ''
-  );
+  const filterSuggestions = dataLf
+    .filter(({ name }) => (inputText ? name.includes(inputText) : ''))
+    .map(({ name }) => name)
+    .filter(val => !tags.includes(val));
 
-  // const t = suggestions.map(({ name, pageWeb, type }) =>
-  //   tags.map(tag => {
-  //     if (name === tag) {
-  //       delete suggestions[suggestions.indexOf(name)];
-  //     }
-  //   })
-  // );
+  const suggestions = dataLf.filter(({ name }) => filterSuggestions.includes(name));
 
-  // console.log(t);
+  const objectsTags = dataLf.filter(({ name }) => tags.includes(name));
 
   const nameLanguajes = dataLf.map(({ name }) => name);
-  console.log(nameLanguajes);
+
+  let validate = sets.map(({ value }) => value).includes(false);
+
   const focusOpcions = (e, index = 0) => {
     const elBottons = i =>
       document.querySelectorAll('.show-enter-input button')[`${i}`].focus();
@@ -89,16 +90,21 @@ const Form = props => {
   return (
     <form className='contentForm' autoComplete='off'>
       <div className='contentInput'>
-        {sets.map(({ placeholder, id, name, set, type }) => (
-          <input
-            key={id}
-            type={type}
-            id={id}
-            name={name}
-            placeholder={placeholder}
-            onChange={e => set(e.target.value)}
-          />
-        ))}
+        {sets.map(({ placeholder, id, name, set, type, value }) => {
+          return (
+            <input
+              key={id}
+              type={type}
+              id={id}
+              name={name}
+              style={!value && startValidate ? { border: '1px solid red' } : {}}
+              placeholder={placeholder}
+              onChange={e => {
+                set(e.target.value);
+              }}
+            />
+          );
+        })}
         <div id='tags-list'>
           <div id='tag-content'>
             <TagsComponent>{{ tags, setTags }}</TagsComponent>
@@ -107,9 +113,13 @@ const Form = props => {
             id='tags'
             type='search'
             name='tags'
+            style={
+              !Object.keys(objectsTags).length && startValidate
+                ? { border: '1px solid red' }
+                : {}
+            }
             placeholder={placeHolderInput}
             onKeyUp={e => {
-              console.log(inputText);
               switch (e.keyCode) {
                 case 13 && nameLanguajes.includes(inputText):
                   setTags([...tags, inputText]);
@@ -134,6 +144,7 @@ const Form = props => {
               tags={tags}
               focusOpcions={focusOpcions}
               setPlaceHolderInput={setPlaceHolderInput}
+              setInputText={setInputText}
             />
           </div>
         </div>
@@ -142,10 +153,21 @@ const Form = props => {
           name='addPerson'
           value='Add person'
           onClick={() => {
-            props.setPeopleList([
-              ...props.peopleList,
-              { name, lastName, img, tags, description, inputText, dataLf },
-            ]);
+            if (!validate && Object.keys(objectsTags).length) {
+              props.setPeopleList([
+                ...props.peopleList,
+                {
+                  name,
+                  lastName,
+                  img,
+                  tags: objectsTags,
+                  email,
+                  inputText,
+                  dataLf,
+                },
+              ]);
+            }
+            setStartValidate(true);
           }}
         />
       </div>
