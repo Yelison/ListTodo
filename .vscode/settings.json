@@ -1,0 +1,6 @@
+{
+  "prettier.tabWidth": 2,
+  "prettier.configPath": "prettier.config.js",
+  "prettier.prettierPath": "prettier.config.js",
+  "editor.tabSize": 2
+}
