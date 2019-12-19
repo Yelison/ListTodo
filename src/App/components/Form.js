@@ -10,7 +10,6 @@ const Form = props => {
   const [img, setImg] = useState('http://placehold.it/150x150');
   const [tags, setTags] = useState([]);
   const [email, setEmail] = useState('');
-  const [placeHolderInput, setPlaceHolderInput] = useState('');
   const [startValidate, setStartValidate] = useState(false);
   const [inputText, setInputText] = useState('');
   const sets = [
@@ -48,23 +47,34 @@ const Form = props => {
     },
   ];
 
+  const clearAndfocusFirstInput = sets => {
+    const ids = sets.map(({ id }) => id);
+    const set = sets.map(({ set }) => set);
+    for (let i = 0; i < ids.length; i++) {
+      setStartValidate(false);
+      set[i]('');
+      document.getElementById(ids[i]).value = '';
+    }
+    setTags([]);
+    document.getElementById('fname').focus();
+  };
+
   const filterSuggestions = dataLf
     .filter(({ name }) => (inputText ? name.includes(inputText) : ''))
     .map(({ name }) => name)
     .filter(val => !tags.includes(val));
 
   const suggestions = dataLf.filter(({ name }) => filterSuggestions.includes(name));
-
   const objectsTags = dataLf.filter(({ name }) => tags.includes(name));
-
   const nameLanguajes = dataLf.map(({ name }) => name);
-
-  let validate = sets.map(({ value }) => value).includes(false);
-
+  const validate = sets.map(({ value }) => value).includes(false);
   const focusOpcions = (e, index = 0) => {
     const elBottons = i =>
       document.querySelectorAll('.show-enter-input button')[`${i}`].focus();
     const lenOfEle = document.querySelectorAll('.show-enter-input button').length;
+    if (index === 1) {
+      document.getElementById('tags').value = document.activeElement.innerHTML;
+    }
     switch (e.keyCode) {
       case 40:
         if (index === 0) {
@@ -73,7 +83,6 @@ const Form = props => {
           index--;
         }
         elBottons(index);
-        // setPlaceHolderInput(e.currentTarget.innerText);
         break;
       case 38:
         if (index === lenOfEle - 1) {
@@ -82,11 +91,9 @@ const Form = props => {
           index++;
         }
         elBottons(index);
-        // setPlaceHolderInput(e.currentTarget.innerText);
         break;
     }
   };
-
   return (
     <form className='contentForm' autoComplete='off'>
       <div className='contentInput'>
@@ -118,22 +125,28 @@ const Form = props => {
                 ? { border: '1px solid red' }
                 : {}
             }
-            placeholder={placeHolderInput}
             onKeyUp={e => {
               switch (e.keyCode) {
                 case 13 && nameLanguajes.includes(inputText):
                   setTags([...tags, inputText]);
+                  break;
                 case 8:
                   if (!inputText) {
                     setTags(tags.slice(0, tags.length - 1));
                   }
+                  break;
                 case 40:
                 case 38:
+                  document.getElementById('tags').value = suggestions.map(
+                    ({ name }) => name
+                  )[suggestions.length - 1];
                   if (suggestions.length) {
                     focusOpcions(e);
                   }
+                  break;
                 default:
                   setInputText(e.target.value);
+                  break;
               }
             }}
           />
@@ -143,7 +156,6 @@ const Form = props => {
               setTags={setTags}
               tags={tags}
               focusOpcions={focusOpcions}
-              setPlaceHolderInput={setPlaceHolderInput}
               setInputText={setInputText}
             />
           </div>
@@ -166,8 +178,10 @@ const Form = props => {
                   dataLf,
                 },
               ]);
+              clearAndfocusFirstInput(sets);
+            } else {
+              setStartValidate(true);
             }
-            setStartValidate(true);
           }}
         />
       </div>
