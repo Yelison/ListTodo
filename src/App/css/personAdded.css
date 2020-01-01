@@ -1,23 +1,26 @@
 .person-added {
-  .person-content {
-    display: flex;
-    width: 50%;
-    flex-wrap: wrap;
 
     .person {
-      flex-wrap: wrap;
       border-radius: 5px;
-      width: 100%;
+      width: 45%;
       height: 270px;
       background: #ebeef0;
       margin: 10px;
+      border: 1px solid;
+      padding: 10px;
+      box-shadow: -11px 11px 8px #272722;
+
 
       .info-person {
         .tags {
           ul {
             li {
               list-style: none;
-              margin-left: 5px;
+              margin-left: 15px;
+
+              a {
+                color: black;
+              }
             }
             display: contents;
 
@@ -26,32 +29,38 @@
             }
           }
 
-          display: inline-flex;
+          display: flex;
+          margin: 10px 10px;
+          flex-wrap: wrap;
         }
 
         .name-email-img{
           img {
             width: 150px;
-            padding: 25px;
+            margin: 20px;
             height: 150px;
+            box-shadow: -11px 11px 8px #6f6f67;
+          }
+
+          .name-email{
+            .name > p {
+              font-size: 25px;
+            }
+            margin-top: 10px;
           }
           display: flex;
           width: 100%;
+          margin-bottom: -10px
         }
-        display: flex;
-        width: 100%;
-        flex-direction: column;
       }
     }
-  }
-
   display: flex;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: rgba(0,0,0,0.1);
   padding: 20px;
   width: 60%;
   margin: auto;
-  margin-top: 15px;
+  margin-top: 40px;
   flex-direction: row;
   flex-wrap: wrap;
 }

@@ -4,9 +4,12 @@ import '../css/tags.css';
 
 class TagsComponent extends Component {
 	render() {
-		return this.props.children.tags.map((tag) => (
+		return this.props.children.tags.map((tag) => {
+			const index = tag.indexOf("(");
+			const result = index !== -1 ? tag.substring(index, -1) : tag; 
+			return (
 			<div className="each-tag" key={uuid.v4()}>
-				<p>{tag}</p>
+				<p>{result}</p>
 				<input
 					type="button"
 					value="x"
@@ -16,7 +19,7 @@ class TagsComponent extends Component {
 					}}
 				/>
 			</div>
-		));
+		)});
 	}
 }
 

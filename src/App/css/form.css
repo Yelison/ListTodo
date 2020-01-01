@@ -5,39 +5,61 @@
 		text-align: center;
 	}
 
-	input[type=text],
-	select {
-		width: 48%;
-		padding: 12px 20px;
-		margin: 10px;
-		display: inline-block;
-		border: 1px solid #ccc;
-
-		box-sizing: border-box;
+	.name-lastName-img-Email-content{
+		#fname,
+		#lname,
+		#img,
+		#email,
+		select {
+			width: 46%;
+			padding: 2% 1%;
+			margin: 1% .7%;
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			border-radius: 5px;
+			background: none;
+			color: white;
+		}		
+		
+	.input-placeHolder-color::placeholder{
+		color: white;
 	}
 
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+
 	div#tags-list {
+		#tag-content {
+			display: flex;
+			width: auto;
+			background: none;
+		}
+
 		input {
 			width: 100%;
+			border: none;
+			background: none;
+			color: white;
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			margin-left: 10px;
+		}
+
+		input::placeholder{
+			color: white;
 		}
 
 		display: flex;
-		width: 97.8%;
-		margin: 10px;
-		height: 45px;
-		border: 1px solid #ccc;
-		background: white;
+		width: 100%;
+		margin: 10px 0;
+		height: 40px;
+		background: none;
 		box-sizing: border-box;
-	}
-
-	#tag-content {
-		display: flex;
-		width: auto;
 	}
 
 	.contentInput > input[type=button] {
 		width: 100%;
-		background-color: #4b5e64;
+		background-color: rgba(0,0,0,0.3);
 		color: white;
 		padding: 14px 20px;
 		margin: 8px 0;
@@ -45,6 +67,12 @@
 		border-radius: 4px;
 		cursor: pointer;
 	}
+
+	.contentInput > input[type=button]:hover {
+		background-color: rgba(0,0,0,0.5);
+	}
+
+
 
 	.show-enter-input {
 		display: flex;
@@ -62,9 +90,9 @@
 
 	display: flex;
 	border-radius: 5px;
-	background-color: #f2f2f2;
 	padding: 20px;
 	width: 60%;
 	margin: auto;
-	margin-top: 15px;
+	margin-top: -330px;
+	background: rgba(0,0,0,0.1);
 }
