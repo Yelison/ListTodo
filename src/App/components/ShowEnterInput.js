@@ -29,5 +29,4 @@ class ShowEnterInput extends React.Component {
     );
   }
 }
-
 export default ShowEnterInput;

@@ -97,10 +97,12 @@ const Form = props => {
   return (
     <form className='contentForm' autoComplete='off'>
       <div className='contentInput'>
+        <div className="name-lastName-img-Email-content">
         {sets.map(({ placeholder, id, name, set, type, value }) => {
           return (
             <input
               key={id}
+              className="input-placeHolder-color"
               type={type}
               id={id}
               name={name}
@@ -112,6 +114,9 @@ const Form = props => {
             />
           );
         })}
+        </div>
+
+
         <div id='tags-list'>
           <div id='tag-content'>
             <TagsComponent>{{ tags, setTags }}</TagsComponent>
@@ -120,6 +125,7 @@ const Form = props => {
             id='tags'
             type='search'
             name='tags'
+            placeholder="tags"
             style={
               !Object.keys(objectsTags).length && startValidate
                 ? { border: '1px solid red' }
