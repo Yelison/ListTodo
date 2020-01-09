@@ -12,6 +12,8 @@ const Form = props => {
   const [email, setEmail] = useState('');
   const [startValidate, setStartValidate] = useState(false);
   const [inputText, setInputText] = useState('');
+
+  
   const sets = [
     {
       type: 'text',
@@ -64,58 +66,59 @@ const Form = props => {
     .map(({ name }) => name)
     .filter(val => !tags.includes(val));
 
-  const suggestions = dataLf.filter(({ name }) => filterSuggestions.includes(name));
+  let suggestions = dataLf.filter(({ name }) => filterSuggestions.includes(name));
   const objectsTags = dataLf.filter(({ name }) => tags.includes(name));
   const nameLanguajes = dataLf.map(({ name }) => name);
   const validate = sets.map(({ value }) => value).includes(false);
   const focusOpcions = (e, index = 0) => {
-    const elBottons = i =>
-      document.querySelectorAll('.show-enter-input button')[`${i}`].focus();
-    const lenOfEle = document.querySelectorAll('.show-enter-input button').length;
-    if (index === 1) {
-      document.getElementById('tags').value = document.activeElement.innerHTML;
-    }
-    switch (e.keyCode) {
-      case 40:
-        if (index === 0) {
-          index = lenOfEle - 1;
-        } else {
-          index--;
-        }
-        elBottons(index);
-        break;
-      case 38:
-        if (index === lenOfEle - 1) {
-          index = 0;
-        } else {
-          index++;
-        }
-        elBottons(index);
-        break;
+    const enterInputButtons = document.querySelectorAll('.show-enter-input button');
+    if (enterInputButtons.length) {
+      const elBottons = i => enterInputButtons[`${i}`].focus();
+      const lenOfEle = enterInputButtons.length;
+      if (index === 1) {
+        document.getElementById('tags').value = document.activeElement.innerHTML;
+      }
+      switch (e.keyCode) {
+        case 40:
+          if (index === 0) {
+            index = lenOfEle - 1;
+          } else {
+            index--;
+          }
+          elBottons(index);
+          break;
+        case 38:
+          if (index === lenOfEle - 1) {
+            index = 0;
+          } else {
+            index++;
+          }
+          elBottons(index);
+          break;
+      }
     }
   };
   return (
     <form className='contentForm' autoComplete='off'>
       <div className='contentInput'>
-        <div className="name-lastName-img-Email-content">
-        {sets.map(({ placeholder, id, name, set, type, value }) => {
-          return (
-            <input
-              key={id}
-              className="input-placeHolder-color"
-              type={type}
-              id={id}
-              name={name}
-              style={!value && startValidate ? { border: '1px solid red' } : {}}
-              placeholder={placeholder}
-              onChange={e => {
-                set(e.target.value);
-              }}
-            />
-          );
-        })}
+        <div className='name-lastName-img-Email-content'>
+          {sets.map(({ placeholder, id, name, set, type, value }) => {
+            return (
+              <input
+                key={id}
+                className='input-placeHolder-color'
+                type={type}
+                id={id}
+                name={name}
+                style={!value && startValidate ? { border: '1px solid red' } : {}}
+                placeholder={placeholder}
+                onChange={e => {
+                  set(e.target.value);
+                }}
+              />
+            );
+          })}
         </div>
-
 
         <div id='tags-list'>
           <div id='tag-content'>
@@ -125,13 +128,14 @@ const Form = props => {
             id='tags'
             type='search'
             name='tags'
-            placeholder="tags"
+            placeholder='tags'
             style={
               !Object.keys(objectsTags).length && startValidate
                 ? { border: '1px solid red' }
                 : {}
             }
             onKeyUp={e => {
+              const tagsInput = document.getElementById('tags');
               switch (e.keyCode) {
                 case 13 && nameLanguajes.includes(inputText):
                   setTags([...tags, inputText]);
@@ -143,9 +147,9 @@ const Form = props => {
                   break;
                 case 40:
                 case 38:
-                  document.getElementById('tags').value = suggestions.map(
-                    ({ name }) => name
-                  )[suggestions.length - 1];
+                  tagsInput.value = suggestions.map(({ name }) => name)[
+                    suggestions.length - 1
+                  ];
                   if (suggestions.length) {
                     focusOpcions(e);
                   }

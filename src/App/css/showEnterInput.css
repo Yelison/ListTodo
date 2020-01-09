@@ -4,7 +4,7 @@
 	max-height: 285px;
 	overflow-y: auto;
 	margin-top: 43px;
-	background: white;
+	background: rgba(0,0,0,0.3);
 
 	.show-enter-input {
 		.result-search {
